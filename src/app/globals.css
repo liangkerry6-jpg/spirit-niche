@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #0a0a0c;
+  color: #f3f4f6;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 按钮微动效 */
+button {
+  transition: transform 150ms ease;
+}
+button:active {
+  transform: scale(0.98);
+}
+
+/* 隐藏横向滚动条，避免切题动效时出现滚动跳变 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* 深色哑光网格纹理 —— 使用纯 CSS 渐变，避免 html-to-image 捕获时产生跨域/空白 */
+.poster-grid {
+  background-color: #0a0a0c;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* 出厂警示条纹边框 */
+.warning-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(250, 204, 21, 0.18) 0px,
+    rgba(250, 204, 21, 0.18) 8px,
+    rgba(239, 68, 68, 0.14) 8px,
+    rgba(239, 68, 68, 0.14) 16px
+  );
+}
+
+/* 打字机闪烁光标 */
+.type-cursor::after {
+  content: '▍';
+  animation: blink 0.8s step-end infinite;
+  color: #10b981;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
