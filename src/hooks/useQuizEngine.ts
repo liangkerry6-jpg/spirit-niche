@@ -1,19 +1,32 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import { Option, Question, QuizVersion, SpeciesKey } from '@/types';
+import { Option, Question, SpeciesKey } from '@/types';
 import { STUDENT_QUESTIONS } from '@/data/studentQuestions';
-import { WORKER_QUESTIONS } from '@/data/workerQuestions';
+
+export interface DualQuizResult {
+  dominant: {
+    key: SpeciesKey;
+    percentage: number;
+    score: number;
+  };
+  latent: {
+    key: SpeciesKey;
+    percentage: number;
+    score: number;
+  };
+}
 
 /**
- * 计分规则说明：
- * 1. 题库共 10 题，单选题。
- * 2. 第 1 题至第 9 题：选中选项对应的 species 计 1.0 分。
- * 3. 第 10 题（独享无约束周日的终极回血机制）：权重设定为 1.1 分。
- *    原因：第 10 题直击能量代谢核心底层，1.1 的权重能够在数学上彻底消除多物种并列平票的问题。
- * 4. 累计分值最高的 species 即为主导物种。
+ * 8 题制计分与双物种判定规则：
+ * 1. Q1 至 Q7：选中的 species 计 1.0 分。
+ * 2. Q8（终极自愈方式）：直击底层代谢，赋予 1.15 分权重。
+ * 3. 排序所有物种得分：最高分为 dominant（主导物种），次高分为 latent（潜伏物种）。
+ * 4. 复合百分比换算（取前两名分值做相对归一化，保留整数步长）：
+ *    dominantPercentage = Math.round((top1Score / (top1Score + top2Score)) * 100)
+ *    latentPercentage = 100 - dominantPercentage
  */
-export function calculateQuizResult(answers: Record<number, SpeciesKey>): SpeciesKey {
+export function calculateDualResult(answers: Record<number, SpeciesKey>): DualQuizResult {
   const scores: Record<SpeciesKey, number> = {
     capybara: 0,
     hedgehog: 0,
@@ -25,21 +38,33 @@ export function calculateQuizResult(answers: Record<number, SpeciesKey>): Specie
 
   for (const [qIdStr, species] of Object.entries(answers)) {
     const qId = parseInt(qIdStr, 10);
-    const weight = qId === 10 ? 1.1 : 1.0;
+    const weight = qId === 8 ? 1.15 : 1.0;
     scores[species] = (scores[species] || 0) + weight;
   }
 
-  let leadingSpecies: SpeciesKey = 'capybara';
-  let highestScore = -1;
+  const sorted = (Object.keys(scores) as SpeciesKey[])
+    .map((key) => ({ key, score: scores[key] }))
+    .sort((a, b) => b.score - a.score);
 
-  for (const species of Object.keys(scores) as SpeciesKey[]) {
-    if (scores[species] > highestScore) {
-      highestScore = scores[species];
-      leadingSpecies = species;
-    }
-  }
+  const top1 = sorted[0];
+  const top2 = sorted[1];
 
-  return leadingSpecies;
+  const totalTopTwo = top1.score + top2.score;
+  const dominantPct = totalTopTwo > 0 ? Math.round((top1.score / totalTopTwo) * 100) : 60;
+  const latentPct = 100 - dominantPct;
+
+  return {
+    dominant: {
+      key: top1.key,
+      score: top1.score,
+      percentage: dominantPct,
+    },
+    latent: {
+      key: top2.key,
+      score: top2.score,
+      percentage: latentPct,
+    },
+  };
 }
 
 /** Fisher-Yates 洗牌，杜绝用户看出固定的 A-F 物种分布规律。 */
@@ -53,7 +78,6 @@ export function fisherYatesShuffle<T>(input: readonly T[]): T[] {
 }
 
 export interface QuizEngine {
-  version: QuizVersion;
   questions: Question[];
   currentQuestion: Question;
   currentIndex: number;
@@ -65,7 +89,7 @@ export interface QuizEngine {
   /** 每道题首次挂载时完成洗牌后的选项次序（本 session 内保持稳定）。 */
   shuffledOptions: Record<number, Option[]>;
   isComplete: boolean;
-  resultSpecies: SpeciesKey;
+  result: DualQuizResult;
   selectAnswer: (questionId: number, species: SpeciesKey) => void;
   goTo: (index: number) => void;
   next: () => void;
@@ -73,11 +97,8 @@ export interface QuizEngine {
   reset: () => void;
 }
 
-export function useQuizEngine(version: QuizVersion): QuizEngine {
-  const questions = useMemo<Question[]>(
-    () => (version === 'student' ? STUDENT_QUESTIONS : WORKER_QUESTIONS),
-    [version],
-  );
+export function useQuizEngine(): QuizEngine {
+  const questions = useMemo<Question[]>(() => STUDENT_QUESTIONS, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, SpeciesKey>>({});
@@ -96,7 +117,7 @@ export function useQuizEngine(version: QuizVersion): QuizEngine {
   const progress = ((currentIndex + 1) / total) * 100;
   const isComplete = answers[questions[total - 1].id] !== undefined;
 
-  const resultSpecies = useMemo(() => calculateQuizResult(answers), [answers]);
+  const result = useMemo(() => calculateDualResult(answers), [answers]);
 
   const selectAnswer = useCallback((questionId: number, species: SpeciesKey) => {
     setAnswers((prev) => ({ ...prev, [questionId]: species }));
@@ -120,7 +141,6 @@ export function useQuizEngine(version: QuizVersion): QuizEngine {
   }, []);
 
   return {
-    version,
     questions,
     currentQuestion,
     currentIndex,
@@ -129,7 +149,7 @@ export function useQuizEngine(version: QuizVersion): QuizEngine {
     answers,
     shuffledOptions,
     isComplete,
-    resultSpecies,
+    result,
     selectAnswer,
     goTo,
     next,

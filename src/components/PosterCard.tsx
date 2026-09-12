@@ -1,11 +1,6 @@
-import { SpeciesKey, SpeciesProfile, QuizVersion } from '@/types';
-import { SPECIES_ORDER } from '@/data/speciesProfiles';
+import { SpeciesKey } from '@/types';
+import { SPECIES_ORDER, SPECIES_PROFILES, SPECIES_TRAIT_PHRASE } from '@/data/speciesProfiles';
 import SpeciesMascot from './SpeciesMascot';
-
-const VERSION_LABEL: Record<QuizVersion, string> = {
-  student: '校园修仙 · 学生版',
-  worker: '职场受难 · 打工版',
-};
 
 /* ------------------------------------------------------------------ */
 /* 占位二维码：纯内联 SVG + 确定性伪随机，避免 html-to-image 跨域空白 */
@@ -117,18 +112,37 @@ function MetricBar({
 }
 
 /* ------------------------------------------------------------------ */
+/* 潜伏人格文案 */
+/* ------------------------------------------------------------------ */
+
+/** 去掉「体」后缀得到裸动物名，如 水豚体 → 水豚。 */
+function shortName(key: SpeciesKey): string {
+  return SPECIES_PROFILES[key].chineseName.replace(/体$/, '');
+}
+
+function buildLatentPhrase(dominantKey: SpeciesKey, latentKey: SpeciesKey): string {
+  const d = SPECIES_TRAIT_PHRASE[dominantKey];
+  const l = SPECIES_TRAIT_PHRASE[latentKey];
+  return `表面是${d.surface}${shortName(dominantKey)}，骨子里其实是${l.inner}的${shortName(latentKey)}。`;
+}
+
+/* ------------------------------------------------------------------ */
 /* 9:16 海报渲染节点 */
 /* ------------------------------------------------------------------ */
 
-export default function PosterCard({
-  profile,
-  version,
-}: {
-  profile: SpeciesProfile;
-  version: QuizVersion;
-}) {
+interface PosterCardProps {
+  dominantKey: SpeciesKey;
+  latentKey: SpeciesKey;
+  domPct: number;
+  latPct: number;
+}
+
+export default function PosterCard({ dominantKey, latentKey, domPct, latPct }: PosterCardProps) {
+  const profile = SPECIES_PROFILES[dominantKey];
+  const latentProfile = SPECIES_PROFILES[latentKey];
   const specimenNo = SPECIES_ORDER.indexOf(profile.key) + 1;
   const color = profile.themeColor;
+  const latentPhrase = buildLatentPhrase(dominantKey, latentKey);
 
   return (
     <div
@@ -140,18 +154,13 @@ export default function PosterCard({
         <span className="text-[9px] font-bold tracking-[0.3em] text-white/50">
           NICHE SPECIMEN
         </span>
-        <div className="flex items-center gap-2">
-          <span className="rounded-full border border-white/15 px-2 py-0.5 text-[9px] text-white/50">
-            {VERSION_LABEL[version]}
-          </span>
-          <span className="font-mono text-[10px] tracking-widest text-white/60">
-            NO.00{specimenNo}
-          </span>
-        </div>
+        <span className="font-mono text-[10px] tracking-widest text-white/60">
+          NO.00{specimenNo}
+        </span>
       </div>
 
-      {/* 物种主标 */}
-      <div className="mt-4 flex items-center gap-4">
+      {/* 主导物种主标 */}
+      <div className="mt-3 flex items-center gap-3">
         <div className="min-w-0 flex-1">
           <h1
             className="text-5xl font-black leading-none"
@@ -163,17 +172,21 @@ export default function PosterCard({
             {profile.englishName}
           </p>
         </div>
-        <SpeciesMascot species={profile.key} size={76} />
+        <SpeciesMascot species={profile.key} size={68} />
       </div>
-      <span
-        className="mt-3 inline-block rounded-full border px-3 py-1 text-xs font-semibold"
-        style={{ color, borderColor: `${color}66`, backgroundColor: `${color}1A` }}
-      >
-        {profile.tagline}
-      </span>
+
+      {/* 显性比例标签 */}
+      <div className="mt-2.5 w-fit">
+        <span
+          className="inline-block rounded-full border px-3 py-1 text-xs font-bold"
+          style={{ color, borderColor: `${color}66`, backgroundColor: `${color}1A` }}
+        >
+          显性主导: {domPct}%
+        </span>
+      </div>
 
       {/* 金句展示 */}
-      <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
+      <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
         <p className="text-base font-bold italic leading-snug text-white">
           <span className="mr-0.5 text-xl" style={{ color }}>
             “
@@ -185,15 +198,28 @@ export default function PosterCard({
         </p>
       </div>
 
+      {/* 视觉概念描述 */}
+      <p className="mt-3 text-[11px] leading-relaxed text-white/70">{profile.visualConcept}</p>
+
+      {/* 潜伏人格胶囊 */}
+      <div className="mt-3 rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-2">
+        <p className="text-[11px] leading-snug text-white/85">
+          <span className="font-bold" style={{ color: latentProfile.themeColor }}>
+            潜伏人格: {latentProfile.chineseName} {latPct}%
+          </span>
+          <span className="text-white/45"> · “{latentPhrase}”</span>
+        </p>
+      </div>
+
       {/* 三维状态指示条 */}
-      <div className="mt-4 space-y-2.5">
+      <div className="mt-3 space-y-2">
         <MetricBar label="电量余量" sub="Battery Remain" value={profile.radarMetrics.batteryRemain} color={color} />
         <MetricBar label="敏感内耗度" sub="Overload Index" value={profile.radarMetrics.overloadIndex} color={color} />
         <MetricBar label="反骨破坏力" sub="Rebellion Level" value={profile.radarMetrics.rebellionLevel} color={color} />
       </div>
 
       {/* 出厂警示框 */}
-      <div className="warning-stripes mt-4 rounded-xl border border-amber-400/40 p-3">
+      <div className="warning-stripes mt-3 rounded-xl border border-amber-400/40 p-3">
         <p className="text-xs font-bold text-amber-300">⚠️ 出厂警示 · 使用禁忌</p>
         <p className="mt-1.5 text-[11px] leading-relaxed text-white/85">
           {profile.factoryWarning.replace(/^⚠️\s*/, '')}
@@ -201,7 +227,7 @@ export default function PosterCard({
       </div>
 
       {/* 社交相性矩阵 */}
-      <div className="mt-4 grid grid-cols-2 gap-2">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         <div className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5">
           <p className="text-[10px] font-bold text-emerald-400">合拍搭子</p>
           <p className="mt-0.5 text-sm font-bold text-white">{profile.bestPartner.name}</p>

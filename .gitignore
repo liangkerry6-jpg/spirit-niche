@@ -14,6 +14,9 @@
 .DS_Store
 *.pem
 
+# 本地吉祥物预览草图（非应用资产）
+/preview/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

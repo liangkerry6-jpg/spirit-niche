@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="capy-caramel" x1="100" y1="40" x2="100" y2="175" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C68A4C"/>
+      <stop offset="100%" stop-color="#9A612A"/>
+    </linearGradient>
+    <radialGradient id="capy-belly" cx="100" cy="140" r="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F5DEB3" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#C68A4C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="capy-orange" x1="100" y1="18" x2="100" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FDBA74"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. 头顶灵魂小砂糖橘 -->
+  <ellipse cx="100" cy="36" rx="14" ry="12" fill="url(#capy-orange)"/>
+  <circle cx="96" cy="32" r="2.8" fill="#FFF7ED"/>
+  <path d="M100 25C107 19 114 22 115 26C109 29 103 27 100 25Z" fill="#22C55E"/>
+  <path d="M100 26C99 22 97 19 94 18" stroke="#15803D" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- 2. 圆圆小耳朵 -->
+  <circle cx="48" cy="82" r="11" fill="#784315"/>
+  <circle cx="48" cy="82" r="6" fill="#D97706" fill-opacity="0.5"/>
+  <circle cx="152" cy="82" r="11" fill="#784315"/>
+  <circle cx="152" cy="82" r="6" fill="#D97706" fill-opacity="0.5"/>
+
+  <!-- 3. 圆滚滚软糯小土豆身躯 -->
+  <path d="M50 92C50 58 72 46 100 46C128 46 150 58 150 92C150 134 162 165 100 165C38 165 50 134 50 92Z" fill="url(#capy-caramel)"/>
+  <ellipse cx="100" cy="132" rx="42" ry="26" fill="url(#capy-belly)"/>
+
+  <!-- 4. 软乎乎淡粉腮红 -->
+  <ellipse cx="62" cy="116" rx="10" ry="6" fill="#F43F5E" fill-opacity="0.25"/>
+  <ellipse cx="138" cy="116" rx="10" ry="6" fill="#F43F5E" fill-opacity="0.25"/>
+
+  <!-- 5. 经典无辜呆滞黑豆豆眼 -->
+  <ellipse cx="74" cy="98" rx="5.5" ry="6.5" fill="#1C1917"/>
+  <circle cx="76" cy="96" r="2.2" fill="#FFFFFF"/>
+  <circle cx="72" cy="100" r="1" fill="#FFFFFF"/>
+  <ellipse cx="126" cy="98" rx="5.5" ry="6.5" fill="#1C1917"/>
+  <circle cx="128" cy="96" r="2.2" fill="#FFFFFF"/>
+  <circle cx="124" cy="100" r="1" fill="#FFFFFF"/>
+
+  <!-- 6. 标志性敦厚大口鼻 -->
+  <rect x="85" y="104" width="30" height="20" rx="10" fill="#5E300E"/>
+  <ellipse cx="94" cy="112" rx="2" ry="2.5" fill="#1C1917"/>
+  <ellipse cx="106" cy="112" rx="2" ry="2.5" fill="#1C1917"/>
+  <path d="M100 124V128" stroke="#5E300E" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M94 128C97 130 103 130 106 128" stroke="#5E300E" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- 7. 乖巧收拢在胸前的小短爪 -->
+  <ellipse cx="86" cy="148" rx="8" ry="7" fill="#E2BA86"/>
+  <ellipse cx="114" cy="148" rx="8" ry="7" fill="#E2BA86"/>
+  <path d="M84 148V151M88 148V151" stroke="#9A612A" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M112 148V151M116 148V151" stroke="#9A612A" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="badger-dark" x1="100" y1="50" x2="100" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#334155"/>
+      <stop stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="jacket" x1="100" y1="130" x2="100" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DC2626"/>
+      <stop stop-color="#991B1B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 机车红色立领皮衣 -->
+  <path d="M50 170L70 135L100 152L130 135L150 170H50Z" fill="url(#jacket)"/>
+  <circle cx="68" cy="150" r="2.5" fill="#FCA5A5"/>
+  <circle cx="132" cy="150" r="2.5" fill="#FCA5A5"/>
+
+  <!-- 深黑面部外廓与圆耳 -->
+  <path d="M52 105C52 65 148 65 148 105C148 135 125 152 100 152C75 152 52 135 52 105Z" fill="url(#badger-dark)"/>
+  <circle cx="56" cy="74" r="10" fill="#0F172A"/>
+  <circle cx="56" cy="74" r="5" fill="#FFFFFF"/>
+  <circle cx="144" cy="74" r="10" fill="#0F172A"/>
+  <circle cx="144" cy="74" r="5" fill="#FFFFFF"/>
+
+  <!-- 灵魂纯白平头发型 -->
+  <path d="M84 62C84 62 100 58 116 62C122 75 124 100 114 125L100 134L86 125C76 100 78 75 84 62Z" fill="#FFFFFF"/>
+
+  <!-- 奶凶挑眉与桀骜斜视 -->
+  <path d="M68 94L84 98" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="76" cy="106" rx="5.5" ry="7" transform="rotate(10 76 106)" fill="#EF4444"/>
+  <circle cx="78" cy="104" r="2" fill="#FFFFFF"/>
+  
+  <path d="M132 94L116 98" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="124" cy="106" rx="5.5" ry="7" transform="rotate(-10 124 106)" fill="#EF4444"/>
+  <circle cx="122" cy="104" r="2" fill="#FFFFFF"/>
+
+  <!-- 倒三角黑鼻与单边歪嘴笑 -->
+  <polygon points="100,120 93,113 107,113" fill="#0F172A"/>
+  <path d="M96 128C102 131 110 130 114 125" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

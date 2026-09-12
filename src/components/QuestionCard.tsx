@@ -14,10 +14,7 @@ export default function QuestionCard({ question, options, selected, onSelect }: 
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-sm font-semibold tracking-wide text-emerald-300">
-          【{question.sceneTitle}】
-        </p>
-        <p className="mt-2.5 text-lg font-bold leading-relaxed text-white">
+        <p className="text-lg font-bold leading-relaxed text-white">
           {question.description}
         </p>
       </div>

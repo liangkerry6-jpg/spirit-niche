@@ -1,18 +1,13 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
 import { useQuizEngine } from '@/hooks/useQuizEngine';
 import ProgressBar from '@/components/ProgressBar';
 import QuestionCard from '@/components/QuestionCard';
-import { Option, QuizVersion } from '@/types';
-
-const VERSION_LABEL: Record<QuizVersion, string> = {
-  student: '校园修仙 · 学生版',
-  worker: '职场受难 · 打工版',
-};
+import { Option } from '@/types';
 
 const TRANSITION_PHRASES = [
   '正在通过 COR 资源矩阵分析应激防御…',
@@ -42,7 +37,7 @@ function TransitionScreen({ onDone }: { onDone: () => void }) {
   }, [charIndex, phraseIndex, onDone]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+    <div className="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
       <div className="text-4xl">🧬</div>
       <p className="type-cursor mt-6 min-h-[2rem] text-lg font-medium text-white/90">{text}</p>
       <div className="mt-8 h-1 w-48 overflow-hidden rounded-full bg-white/10">
@@ -58,10 +53,7 @@ function TransitionScreen({ onDone }: { onDone: () => void }) {
 }
 
 export default function QuizClient() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const rawVersion = searchParams.get('version');
-  const version: QuizVersion = rawVersion === 'worker' ? 'worker' : 'student';
 
   const {
     questions,
@@ -71,10 +63,10 @@ export default function QuizClient() {
     progress,
     answers,
     shuffledOptions,
-    resultSpecies,
+    result,
     selectAnswer,
     goTo,
-  } = useQuizEngine(version);
+  } = useQuizEngine();
 
   const [phase, setPhase] = useState<'quiz' | 'transition'>('quiz');
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -105,8 +97,14 @@ export default function QuizClient() {
   }, [currentIndex, goTo]);
 
   const handleDone = useCallback(() => {
-    router.replace(`/result?version=${version}&species=${resultSpecies}`);
-  }, [router, version, resultSpecies]);
+    const q = new URLSearchParams({
+      dominant: result.dominant.key,
+      latent: result.latent.key,
+      domPct: String(result.dominant.percentage),
+      latPct: String(result.latent.percentage),
+    });
+    router.replace(`/result?${q.toString()}`);
+  }, [router, result]);
 
   useEffect(() => {
     return () => {
@@ -119,7 +117,7 @@ export default function QuizClient() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-5 py-6">
+    <div className="mx-auto flex min-h-dvh max-w-3xl flex-col px-5 py-6">
       {/* 顶部：回退 + 版本标识 */}
       <header className="flex items-center justify-between">
         <button
@@ -130,8 +128,8 @@ export default function QuizClient() {
           <ChevronLeft size={15} />
           上一题
         </button>
-        <span className="text-xs text-white/50">{VERSION_LABEL[version]}</span>
-        <span className="text-[10px] tracking-[0.25em] text-white/25">SPIRIT NICHE</span>
+        <span className="text-xs text-white/50">8题极速版</span>
+        <span className="hidden text-[10px] tracking-[0.25em] text-white/25 sm:inline">SPIRIT NICHE</span>
       </header>
 
       {/* 进度条 */}

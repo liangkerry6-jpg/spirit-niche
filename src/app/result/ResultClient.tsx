@@ -9,7 +9,7 @@ import Header from '@/components/Header';
 import PosterCard from '@/components/PosterCard';
 import SpeciesMascot from '@/components/SpeciesMascot';
 import { SPECIES_PROFILES } from '@/data/speciesProfiles';
-import { SpeciesKey, QuizVersion } from '@/types';
+import { SpeciesKey } from '@/types';
 
 function isMobileDevice(): boolean {
   if (typeof window === 'undefined') return false;
@@ -23,14 +23,19 @@ export default function ResultClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const rawSpecies = searchParams.get('species');
-  const rawVersion = searchParams.get('version');
-  const version: QuizVersion = rawVersion === 'worker' ? 'worker' : 'student';
-
-  const speciesKey: SpeciesKey = (
-    rawSpecies && rawSpecies in SPECIES_PROFILES ? rawSpecies : 'capybara'
+  const dominantRaw = searchParams.get('dominant');
+  const dominantKey: SpeciesKey = (
+    dominantRaw && dominantRaw in SPECIES_PROFILES ? dominantRaw : 'capybara'
   ) as SpeciesKey;
-  const profile = SPECIES_PROFILES[speciesKey];
+  const latentRaw = searchParams.get('latent');
+  const latentKey: SpeciesKey = (
+    latentRaw && latentRaw in SPECIES_PROFILES ? latentRaw : 'owl'
+  ) as SpeciesKey;
+  const domPctRaw = parseInt(searchParams.get('domPct') ?? '', 10);
+  const domPct = Number.isFinite(domPctRaw) ? Math.min(100, Math.max(5, domPctRaw)) : 60;
+  const latPct = 100 - domPct;
+  const profile = SPECIES_PROFILES[dominantKey];
+  const latentProfile = SPECIES_PROFILES[latentKey];
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -59,11 +64,11 @@ export default function ResultClient() {
     }
   };
 
-  const handleRetake = () => router.push(`/quiz?version=${version}`);
+  const handleRetake = () => router.push('/quiz');
   const handleHome = () => router.push('/');
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       <Header />
 
       <main className="mx-auto max-w-3xl px-5 py-8">
@@ -73,15 +78,26 @@ export default function ResultClient() {
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <SpeciesMascot species={speciesKey} size={140} glow />
+            <SpeciesMascot species={dominantKey} size={140} glow />
           </motion.div>
           <h1 className="mt-4 text-2xl font-black text-white">你是「{profile.chineseName}」</h1>
           <p className="mt-1 text-sm italic text-white/50">{profile.englishName}</p>
+          <p className="mt-3 text-xs text-white/55">
+            潜伏人格 ·{' '}
+            <span className="font-semibold" style={{ color: latentProfile.themeColor }}>
+              {latentProfile.chineseName} {latPct}%
+            </span>
+          </p>
         </div>
 
         {/* 海报 */}
         <div className="flex flex-col items-center">
-          <PosterCard profile={profile} version={version} />
+          <PosterCard
+            dominantKey={dominantKey}
+            latentKey={latentKey}
+            domPct={domPct}
+            latPct={latPct}
+          />
         </div>
 
         {/* 操作按钮 */}

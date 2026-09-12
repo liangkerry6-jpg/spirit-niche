@@ -6,8 +6,6 @@ export type SpeciesKey =
   | 'owl'
   | 'chameleon';
 
-export type QuizVersion = 'student' | 'worker';
-
 export interface Option {
   id: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
   text: string;
@@ -28,6 +26,7 @@ export interface SpeciesProfile {
   tagline: string; // 维度组合标签
   defenseMechanism: string; // 心理学机制术语
   goldenQuote: string; // 一句话生存金句
+  visualConcept: string; // 视觉概念描述（海报主物种区展示）
   symptoms: string[]; // 3 条典型行为症状
   factoryWarning: string; // 出厂警示 (使用禁忌)
   bestPartner: {

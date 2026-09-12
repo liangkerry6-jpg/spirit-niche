@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="octo-mint" x1="100" y1="40" x2="100" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4ADE80"/>
+      <stop stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 弯曲触手群 -->
+  <path d="M45 140C35 155 42 172 58 170C68 168 68 152 64 140" fill="#059669"/>
+  <path d="M155 140C165 155 158 172 142 170C132 168 132 152 136 140" fill="#059669"/>
+  <path d="M60 142C52 165 65 178 80 172C90 168 85 148 82 142" fill="url(#octo-mint)"/>
+  <path d="M140 142C148 165 135 178 120 172C110 168 115 148 118 142" fill="url(#octo-mint)"/>
+  <path d="M92 145C92 175 108 175 108 145" fill="url(#octo-mint)"/>
+  <path d="M152 118C168 112 175 125 168 135C160 142 148 135 148 128" fill="url(#octo-mint)"/>
+
+  <!-- 圆润大头颅 -->
+  <ellipse cx="100" cy="96" rx="58" ry="54" fill="url(#octo-mint)"/>
+
+  <!-- 吸盘点缀 -->
+  <circle cx="48" cy="164" r="3" fill="#A7F3D0"/>
+  <circle cx="152" cy="164" r="3" fill="#A7F3D0"/>
+  <circle cx="72" cy="168" r="3" fill="#A7F3D0"/>
+  <circle cx="128" cy="168" r="3" fill="#A7F3D0"/>
+
+  <!-- 大大水灵萌眼 -->
+  <circle cx="78" cy="98" r="18" fill="#FFFFFF"/>
+  <circle cx="80" cy="98" r="11" fill="#0F172A"/>
+  <circle cx="83" cy="94" r="5" fill="#FFFFFF"/>
+  <circle cx="76" cy="102" r="2" fill="#FFFFFF"/>
+  
+  <circle cx="122" cy="98" r="18" fill="#FFFFFF"/>
+  <circle cx="120" cy="98" r="11" fill="#0F172A"/>
+  <circle cx="123" cy="94" r="5" fill="#FFFFFF"/>
+  <circle cx="116" cy="102" r="2" fill="#FFFFFF"/>
+
+  <!-- 害羞小腮红与微张工作小嘴 -->
+  <ellipse cx="62" cy="116" rx="7" ry="4" fill="#F43F5E" fill-opacity="0.3"/>
+  <ellipse cx="138" cy="116" rx="7" ry="4" fill="#F43F5E" fill-opacity="0.3"/>
+  <ellipse cx="100" cy="120" rx="5" ry="6" fill="#065F46"/>
+</svg>

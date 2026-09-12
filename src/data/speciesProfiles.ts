@@ -16,15 +16,17 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     chineseName: '水豚体',
     englishName: 'Capybara',
     tagline: '省电模式 × 钝感绝缘 × 顺应躺平',
-    defenseMechanism: '习得性佛系 / 情感隔离型自愈 (Emotional Isolation)',
+    defenseMechanism: '生理级纯天然自愈 / 终极情绪稳定',
     goldenQuote: '生活以痛吻我，我直接就地躺平并问它累不累。',
+    visualConcept:
+      '一只圆滚滚、像刚出炉烤面包般的软糯水豚，顶着两坨天然粉嫩腮红，头顶顶着一颗新鲜带绿叶的小砂糖橘（或泡澡小黄鸭），安逸地泡在冒着热气的温泉小木桶里。周围漂浮着彩虹小气泡，半透明气泡内标有：[ CPU 待机中 🔋 15% ]。',
     symptoms: [
-      '微信常年免打扰，朋友圈三年可见且从不发动态。',
-      '情绪稳定得像一尊假人，纯粹因为 CPU 懒得为这点破事通电。',
-      '危机逻辑：只要砸不到我我就继续吃草；真砸到了，反正大家一起完蛋。',
+      '当代情绪稳定天花板，世界崩塌前先泡个澡。',
+      '非必要不输出，微信长期处于“意念已读”的低功耗模式。',
+      '核心生存信条：天塌下来只要砸不到我我就继续吃草，砸到了反正大家一起完蛋。',
     ],
     factoryWarning:
-      '⚠️ 严禁试图对其进行“狼性激励”或画大饼。任何鸡血口号输入其体内，都会被自动转译为一阵困意，随后陷入深度睡眠。',
+      '⚠️ 严禁试图对其进行画大饼或狼性激励。任何鸡血口号输入其体内，都会被自动过滤为一阵温暖困意，导致其当场入睡。',
     bestPartner: {
       key: 'owl',
       name: '猫头鹰体',
@@ -33,14 +35,14 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     worstEnemy: {
       key: 'badger',
       name: '蜜獾体',
-      reason: '他每天都在疯狂创飞世界，而我只想世界离我远点，其存在让我生理性耗电。',
+      reason: '他每天都在疯狂创飞世界，而我只想安静晒太阳，其高频燥热让我生理性耗电。',
     },
     radarMetrics: {
       batteryRemain: 15,
-      overloadIndex: 12,
+      overloadIndex: 10,
       rebellionLevel: 45,
     },
-    themeColor: '#10B981', // 荧光翡翠绿
+    themeColor: '#D97706', // 经典暖焦糖金
   },
 
   hedgehog: {
@@ -50,6 +52,8 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     tagline: '省电模式 × 高敏警戒 × 物理隔离',
     defenseMechanism: '回避型依恋 / 边界感过激防御 (Avoidant Boundary)',
     goldenQuote: '我很缺爱，但只要你敢过来，我就敢把你扎穿。',
+    visualConcept:
+      '一只浑身竖满靛蓝尖刺的小刺猬，尖刺间露出浅色软软的面盘，耳朵上挂着降噪耳机，把整个身体蜷成一颗带刺的防御球，四周散落着“请勿打扰”的结界波纹。',
     symptoms: [
       '降噪耳机是本体，即使不放歌也必须挂在耳朵上充当“请勿搭讪”结界。',
       '线上秒回热情礼貌，线下聚会半小时就开始筹划如何体面蒸发。',
@@ -82,6 +86,8 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     tagline: '超频模式 × 高敏警戒 × 结构操纵',
     defenseMechanism: '主动型焦虑代偿 / 全能感防御 (Omnipotence Defense)',
     goldenQuote: '八条腿都在同时赶工，大脑还在抽空复盘昨晚说错的一句话。',
+    visualConcept:
+      '一只青色大脑袋章鱼，八条触手同时抓着手机、平板、笔记本与咖啡杯，头顶悬浮着几十个未关闭的浏览器标签页，四周环绕着多线程高速运转的数据流光。',
     symptoms: [
       '浏览器常年开着 40 个未关闭的标签页，每一个都标记着“等会儿看”。',
       '极度怀疑别人的交付能力，边抱怨为什么都是我做，边把权限死抓在手。',
@@ -104,7 +110,7 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
       overloadIndex: 95,
       rebellionLevel: 35,
     },
-    themeColor: '#06B6D4', // 电子青蓝
+    themeColor: '#10B981', // 荧光薄荷绿
   },
 
   badger: {
@@ -114,6 +120,8 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     tagline: '超频模式 × 钝感解构 × 狂暴破坏',
     defenseMechanism: '攻击性外化 / 躁狂防御 (Acting Out & Manic Defense)',
     goldenQuote: '生不带来死不带去，今天谁让我受委屈，我就让谁受工伤。',
+    visualConcept:
+      '一只红褐色的蜜獾，背上一条标志性白色条纹，怒眉倒竖、龇牙咧嘴，脚下踩着被掀翻的课桌，身后是熊熊燃烧的“反卷”狼烟。',
     symptoms: [
       '反卷先锋，对职场 PUA 与道德绑架具备天生免死抗体。',
       '精神状态在“算了不计较”和“大家都别活了”之间反复横跳并精准滑向后者。',
@@ -146,6 +154,8 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     tagline: '省电模式 × 高敏深思 × 秩序重组',
     defenseMechanism: '理智化防御 / 认知隔离避风港 (Intellectualization)',
     goldenQuote: '人类的情绪喧闹而无用，不如来看这张对齐好的逻辑树图。',
+    visualConcept:
+      '一只戴着圆框眼镜的琥珀色猫头鹰，头顶竖起两撮耳羽，胸前抱着一本摊开的逻辑树图，脚边散落着便签与红蓝两色马克笔。',
     symptoms: [
       '白天像个节能待机玩偶，一到午夜 12 点思维神经开始通电狂欢。',
       '极度反感毫无营养的寒暄煽情，擅长把剧烈心理创伤翻译成客观学术因果链。',
@@ -178,6 +188,8 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     tagline: '超频模式 × 钝感生存 × 柔性重塑',
     defenseMechanism: '假自我防御 / 顺从型社交拟态 (False Self Adaptation)',
     goldenQuote: '见人说人话，见鬼说鬼话，独处时不知道自己在说什么话。',
+    visualConcept:
+      '一只粉紫色的变色龙，头冠高耸、凸出的双眼灵活地同时看向不同方向，身体渐变成与周围环境融为一体的色彩，嘴角挂着善解人意的标准微笑。',
     symptoms: [
       '人群中的气氛调节大师，光速镜像模仿在场最有话语权的人的喜好。',
       '常因“把每个人都照顾得很好”获好评，但关上家门那一秒整个人陷入极度空虚。',
@@ -202,4 +214,18 @@ export const SPECIES_PROFILES: Record<SpeciesKey, SpeciesProfile> = {
     },
     themeColor: '#EC4899', // 霓虹粉紫
   },
+};
+
+/**
+ * 「潜伏人格」胶囊文案所需的每物种短修饰语。
+ * surface 用于该物种作为「主导」时的表面画像；inner 用于该物种作为「潜伏」时的内核欲望。
+ * 模板：`表面是{surface}{dominantName}，骨子里其实是{inner}的{latentName}。`
+ */
+export const SPECIES_TRAIT_PHRASE: Record<SpeciesKey, { surface: string; inner: string }> = {
+  capybara: { surface: '情绪稳定', inner: '渴望躺平' },
+  hedgehog: { surface: '高敏警觉', inner: '渴望被温柔接住' },
+  octopus: { surface: '八爪全开', inner: '渴望被兜底分担' },
+  badger: { surface: '易燃易爆', inner: '渴望不设防地示弱' },
+  owl: { surface: '理性冷静', inner: '渴望有人读懂他的逻辑' },
+  chameleon: { surface: '八面玲珑', inner: '渴望卸下伪装做自己' },
 };
