@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://liangkerry6-jpg.github.io/spirit-niche/'),
   title: 'Spirit Niche · 数字精神生态位测评',
   description:
     '测测你在现代压力下的精神物种 —— 基于资源保存 (COR) 与感官防御 (SPS) 理论构建的 90 秒应激切片测评。',
@@ -11,6 +12,21 @@ export const metadata: Metadata = {
       '基于资源保存 (COR) 与感官防御 (SPS) 理论构建的 90 秒应激切片测评，测出你的精神物种。',
     type: 'website',
     locale: 'zh_CN',
+    images: [
+      {
+        url: '/og-cover.png',
+        width: 1200,
+        height: 1200,
+        alt: '数字精神生态位测评 · 六种精神物种封面',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Spirit Niche · 数字精神生态位测评',
+    description:
+      '基于资源保存 (COR) 与感官防御 (SPS) 理论构建的 90 秒应激切片测评，测出你的精神物种。',
+    images: ['/og-cover.png'],
   },
 };
 
