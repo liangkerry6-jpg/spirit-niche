@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://liangkerry6-jpg.github.io/spirit-niche/'),
+  metadataBase: new URL('https://spirit-niche.netlify.app/'),
   title: 'Spirit Niche · 数字精神生态位测评',
   description:
     '测测你在现代压力下的精神物种 —— 基于资源保存 (COR) 与感官防御 (SPS) 理论构建的 90 秒应激切片测评。',
