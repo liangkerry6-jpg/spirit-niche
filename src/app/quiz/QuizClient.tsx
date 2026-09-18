@@ -128,7 +128,7 @@ export default function QuizClient() {
           <ChevronLeft size={15} />
           上一题
         </button>
-        <span className="text-xs text-white/50">8题极速版</span>
+        <span className="text-xs text-white/50">12题完整版</span>
         <span className="hidden text-[10px] tracking-[0.25em] text-white/25 sm:inline">SPIRIT NICHE</span>
       </header>
 

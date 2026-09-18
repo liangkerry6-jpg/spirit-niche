@@ -18,9 +18,9 @@ export interface DualQuizResult {
 }
 
 /**
- * 8 题制计分与双物种判定规则：
- * 1. Q1 至 Q7：选中的 species 计 1.0 分。
- * 2. Q8（终极自愈方式）：直击底层代谢，赋予 1.15 分权重。
+ * 12 题制计分与双物种判定规则：
+ * 1. 除 Q8 外共 11 题：选中的 species 计 1.0 分。
+ * 2. Q8（独享无课周日的自愈方式）：直击底层能量代谢，赋予 1.2 分权重。
  * 3. 排序所有物种得分：最高分为 dominant（主导物种），次高分为 latent（潜伏物种）。
  * 4. 复合百分比换算（取前两名分值做相对归一化，保留整数步长）：
  *    dominantPercentage = Math.round((top1Score / (top1Score + top2Score)) * 100)
@@ -38,7 +38,7 @@ export function calculateDualResult(answers: Record<number, SpeciesKey>): DualQu
 
   for (const [qIdStr, species] of Object.entries(answers)) {
     const qId = parseInt(qIdStr, 10);
-    const weight = qId === 8 ? 1.15 : 1.0;
+    const weight = qId === 8 ? 1.2 : 1.0;
     scores[species] = (scores[species] || 0) + weight;
   }
 

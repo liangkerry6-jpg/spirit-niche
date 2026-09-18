@@ -32,7 +32,7 @@ export default function HomePage() {
             onClick={() => router.push('/quiz')}
             className="group mt-10 flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3.5 text-sm font-bold text-black transition-colors hover:bg-emerald-400 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
           >
-            立即捕获我的精神物种（8题极速版）
+            立即捕获我的精神物种（12题完整版）
             <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
           </button>
         </section>

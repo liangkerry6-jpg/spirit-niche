@@ -7,6 +7,7 @@ import { toPng } from 'html-to-image';
 import { Download, RotateCcw, X } from 'lucide-react';
 import Header from '@/components/Header';
 import PosterCard from '@/components/PosterCard';
+import DeskSignCard from '@/components/DeskSignCard';
 import SpeciesMascot from '@/components/SpeciesMascot';
 import { SPECIES_PROFILES } from '@/data/speciesProfiles';
 import { SpeciesKey } from '@/types';
@@ -40,25 +41,33 @@ export default function ResultClient() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<'poster' | 'deskSign'>('poster');
+  const [previewFilename, setPreviewFilename] = useState('spirit-niche.png');
 
   const handleSave = async () => {
-    const node = document.getElementById('poster-node');
+    const nodeId = mode === 'deskSign' ? 'desk-sign-node' : 'poster-node';
+    const node = document.getElementById(nodeId);
     if (!node) return;
     setIsGenerating(true);
     setError(null);
     try {
       const dataUrl = await toPng(node, { pixelRatio: 2 });
+      const filename =
+        mode === 'deskSign'
+          ? `spirit-niche-desk-${profile.key}.png`
+          : `spirit-niche-${profile.key}.png`;
       if (isMobileDevice()) {
         setPreviewUrl(dataUrl);
+        setPreviewFilename(filename);
       } else {
         const link = document.createElement('a');
-        link.download = `spirit-niche-${profile.key}.png`;
+        link.download = filename;
         link.href = dataUrl;
         link.click();
       }
     } catch (e) {
-      console.error('海报导出失败:', e);
-      setError('海报生成失败，请长按海报截图保存，或更换浏览器后重试。');
+      console.error('导出失败:', e);
+      setError('图片生成失败，请长按截图保存，或更换浏览器后重试。');
     } finally {
       setIsGenerating(false);
     }
@@ -90,14 +99,53 @@ export default function ResultClient() {
           </p>
         </div>
 
-        {/* 海报 */}
+        {/* 模式切换 */}
+        <div className="mb-6 flex justify-center">
+          <div className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1">
+            <button
+              type="button"
+              onClick={() => setMode('poster')}
+              className={`rounded-full px-4 py-2 text-xs font-bold transition-colors sm:text-sm ${
+                mode === 'poster' ? 'bg-emerald-500 text-black' : 'text-white/65 hover:text-white'
+              }`}
+            >
+              📱 9:16 标本海报
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode('deskSign')}
+              className={`rounded-full px-4 py-2 text-xs font-bold transition-colors sm:text-sm ${
+                mode === 'deskSign' ? 'bg-emerald-500 text-black' : 'text-white/65 hover:text-white'
+              }`}
+            >
+              🪧 课桌电子立牌
+            </button>
+          </div>
+        </div>
+
+        {/* 卡片渲染区（海报 / 立牌） */}
         <div className="flex flex-col items-center">
-          <PosterCard
-            dominantKey={dominantKey}
-            latentKey={latentKey}
-            domPct={domPct}
-            latPct={latPct}
-          />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={mode}
+              className="flex w-full justify-center"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+            >
+              {mode === 'poster' ? (
+                <PosterCard
+                  dominantKey={dominantKey}
+                  latentKey={latentKey}
+                  domPct={domPct}
+                  latPct={latPct}
+                />
+              ) : (
+                <DeskSignCard species={dominantKey} />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* 操作按钮 */}
@@ -108,11 +156,11 @@ export default function ResultClient() {
             className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-black transition-colors hover:bg-emerald-400 disabled:cursor-wait disabled:opacity-60"
           >
             {isGenerating ? (
-              '正在生成海报…'
+              mode === 'deskSign' ? '正在生成立牌…' : '正在生成海报…'
             ) : (
               <>
                 <Download size={16} />
-                📸 保存结果海报 (长按/下载)
+                {mode === 'deskSign' ? '📸 保存横屏立牌壁纸' : '📸 保存结果海报 (长按/下载)'}
               </>
             )}
           </button>
@@ -191,7 +239,7 @@ export default function ResultClient() {
             />
             <a
               href={previewUrl}
-              download={`spirit-niche-${profile.key}.png`}
+              download={previewFilename}
               className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm text-white/85 transition-colors hover:text-white"
               onClick={(e) => e.stopPropagation()}
             >
